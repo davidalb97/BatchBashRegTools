@@ -20,3 +20,7 @@ A collection of scripts made in Bash (.sh), Batch (.bat) &amp; Registry Data (.r
 * restartAudio.bat
   * Restarts windows audio service (Useful for when audio programs require you to restart your computer Ex: EqualiserAPO)
   * [Original UAC request code](https://stackoverflow.com/a/30590134) by [cyberponk](https://stackoverflow.com/users/4932683/cyberponk)
+
+### Tip: Running .sh files on Windows ###
+One easy way to run .sh files in windows is to install [Git](https://git-scm.com/downloads) as it comes with a bash shell emulator, that's able to run .sh files
+ (You could also create an .exe file that runs the emulator using C:\Windows\System32\iexpress.exe)
