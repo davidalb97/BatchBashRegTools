@@ -54,10 +54,10 @@ isValidFolder(){
 counter(){
     for file in "$1"/.[^.]* "$1"/*
     do
-	FOLDER="$(basename $file)"
+	BASE=$(basename "$file")
     if [ -d "$file" ]; then
 		if [ -d "$file/.git" ]; then
-			echo -e "$GREEN$FOLDER$NC"
+			echo -e "$GREEN$BASE$NC"
 			CD="$PWD"
 			cd "$file"
 			git pull
@@ -67,12 +67,12 @@ counter(){
 			fi
 			echo -e "$YELLOW-----------------------------------$NC"
         else
-			isValidFolder $FOLDER
+			isValidFolder $BASE
 			if [ $? == 1 ]; then
 				counter "$file"
 			fi
 		fi
-	elif [ "$FOLDER" = ".ignorerepos" ]; then
+	elif [ "$BASE" = ".ignorerepos" ]; then
 		break
     fi
     done
