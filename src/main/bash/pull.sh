@@ -72,7 +72,7 @@ counter(){
 				counter "$file"
 			fi
 		fi
-	elif [ "$FOLDER" = ".ignorerepos"]; then
+	elif [ "$FOLDER" = ".ignorerepos" ]; then
 		break
     fi
     done
