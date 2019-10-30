@@ -3,7 +3,7 @@ A collection of scripts made in Bash (.sh), Batch (.bat) &amp; Registry Data (.r
 
 ## src/main/bash ##
 * pull.sh
-  * Recursivly pulls all git repos using these rules as path:
+  * Recursively pulls all git repos using these rules as path:
     * Path parameter
     * REPOS enviroment variable
     * Current directory
