@@ -56,16 +56,18 @@ counter(){
     do
 	BASE=$(basename "$file")
     if [ -d "$file" ]; then
-		if [ -d "$file/.git" ]; then
-			echo -e "$GREEN$BASE$NC"
+		if [ "$BASE" == ".git" ]; then
 			CD="$PWD"
 			cd "$file"
+			cd ..
+			echo -e "$GREEN$(basename "$PWD")$NC"
 			git pull
 			cd "$CD"
 			if [ $? == 127 ]; then
 				exit
 			fi
 			echo -e "$YELLOW-----------------------------------$NC"
+			break
         else
 			isValidFolder $BASE
 			if [ $? == 1 ]; then
