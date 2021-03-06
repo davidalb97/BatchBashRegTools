@@ -105,11 +105,9 @@ SET ipv6-2=2620:119:53::53
 GOTO SetDns
 
 :ClearDns
-netsh interface show interface | findstr "Enabled" | findstr "Connected" | findstr "Ethernet" >NUL
-if %ERRORLEVEL% equ 0 CALL :ClearAdapterDns "Ethernet"
-
-netsh interface show interface | findstr "Enabled" | findstr "Connected" | findstr "Wi-Fi" >NUL
-if %ERRORLEVEL% equ 0 CALL :ClearAdapterDns "Wi-Fi"
+For /f "tokens=1,2,3*" %%a In ('netsh interface show interface ^| findstr "Enabled" ^| findstr "Connected" ^| findstr "Ethernet Wi-Fi"') Do (
+	CALL :ClearAdapterDns "%%d"
+)
 
 GOTO :End
 
@@ -117,20 +115,18 @@ GOTO :End
 
 SET "adaptersFound=y"
 
-ECHO Setting IPv4 DNS for %~1 adapter to automatic...
-netsh interface ipv4 set dns %~1 dhcp
+ECHO Setting IPv4 DNS for %1 adapter to automatic...
+netsh interface ipv4 set dns %1 dhcp
 
-ECHO Setting IPv6 DNS for %~1 adapter to automatic...
-netsh interface ipv6 set dns %~1 dhcp
+ECHO Setting IPv6 DNS for %1 adapter to automatic...
+netsh interface ipv6 set dns %1 dhcp
 
 GOTO :EOF
 
 :SetDns
-netsh interface show interface | findstr "Enabled" | findstr "Connected" | findstr "Ethernet" >NUL
-if %ERRORLEVEL% equ 0 CALL :SetAdapterDns "Ethernet"
-
-netsh interface show interface | findstr "Enabled" | findstr "Connected" | findstr "Wi-Fi" >NUL
-if %ERRORLEVEL% equ 0 CALL :SetAdapterDns "Wi-Fi"
+For /f "tokens=1,2,3*" %%a In ('netsh interface show interface ^| findstr "Enabled" ^| findstr "Connected" ^| findstr "Ethernet Wi-Fi"') Do (
+	CALL :SetAdapterDns "%%d"
+)
 
 GOTO :End
 
@@ -138,17 +134,17 @@ GOTO :End
 
 SET "adaptersFound=y"
 
-ECHO Setting Primary IPv4 DNS for %~1 adapter to %ipv4-1%...
-netsh interface ipv4 set dnsservers name= %~1 source= Static address= %ipv4-1%
+ECHO Setting Primary IPv4 DNS for %1 adapter to %ipv4-1%...
+netsh interface ipv4 set dnsservers name= %1 source= Static address= %ipv4-1%
 
-ECHO Setting Secondary IPv4 DNS for %~1 adapter to %ipv4-2%...
-netsh interface ipv4 add dnsservers name= %~1 address= %ipv4-2%
+ECHO Setting Secondary IPv4 DNS for %1 adapter to %ipv4-2%...
+netsh interface ipv4 add dnsservers name= %1 address= %ipv4-2%
 	
-ECHO Setting Primary IPv6 DNS for %~1 adapter to %ipv6-1%...
-netsh interface ipv6 set dnsservers name= %~1 source= Static address= %ipv6-1%
+ECHO Setting Primary IPv6 DNS for %1 adapter to %ipv6-1%...
+netsh interface ipv6 set dnsservers name= %1 source= Static address= %ipv6-1%
 
-ECHO Setting Secondary IPv6 DNS for %~1 adapter to %ipv6-1%...
-netsh interface ipv6 add dnsservers name= %~1 address= %ipv6-2%
+ECHO Setting Secondary IPv6 DNS for %1 adapter to %ipv6-1%...
+netsh interface ipv6 add dnsservers name= %1 address= %ipv6-2%
 
 
 GOTO :EOF
