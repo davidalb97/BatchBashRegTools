@@ -105,8 +105,8 @@ SET ipv6-2=2620:119:53::53
 GOTO SetDns
 
 :ClearDns
-For /f "tokens=1,2,3*" %%a In ('netsh interface show interface ^| findstr "Enabled" ^| findstr "Connected" ^| findstr "Ethernet Wi-Fi"') Do (
-	CALL :ClearAdapterDns "%%d"
+For /f "tokens=3*" %%a In ('netsh interface show interface ^| findstr "Enabled" ^| findstr "Connected" ^| findstr "Ethernet Wi-Fi"') Do (
+	CALL :ClearAdapterDns "%%b"
 )
 
 GOTO :End
@@ -124,8 +124,8 @@ netsh interface ipv6 set dns %1 dhcp
 GOTO :EOF
 
 :SetDns
-For /f "tokens=1,2,3*" %%a In ('netsh interface show interface ^| findstr "Enabled" ^| findstr "Connected" ^| findstr "Ethernet Wi-Fi"') Do (
-	CALL :SetAdapterDns "%%d"
+For /f "tokens=3*" %%a In ('netsh interface show interface ^| findstr "Enabled" ^| findstr "Connected" ^| findstr "Ethernet Wi-Fi"') Do (
+	CALL :SetAdapterDns "%%b"
 )
 
 GOTO :End
